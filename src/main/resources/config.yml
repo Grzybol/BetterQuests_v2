@@ -1,0 +1,13 @@
+activeQuestsCount: 3
+rotation:
+  intervalHours: 24
+economy:
+  enabled: true
+storage:
+  type: yaml # yaml lub sqlite
+itemMatching:
+  metaStrict: false
+  customModelData: null
+  displayName: null
+  nbtTags: null
+autosaveSeconds: 120

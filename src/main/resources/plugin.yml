@@ -1,0 +1,22 @@
+name: DailyQuests
+main: org.bestservers.DailyQuestsPlugin
+version: 1.0.0
+api-version: 1.18
+depend: [Vault]
+softdepend: [PlaceholderAPI]
+commands:
+  quests:
+    description: Zarządzanie questami dziennymi
+    usage: /quests [reload|info <id>]
+    permission: dailyquests.user
+  claim:
+    description: Rozlicz aktywne questy
+    usage: /claim
+    permission: dailyquests.user
+permissions:
+  dailyquests.user:
+    description: Dostęp do questów i rozliczania
+    default: true
+  dailyquests.admin:
+    description: Zarządzanie pluginem
+    default: op
