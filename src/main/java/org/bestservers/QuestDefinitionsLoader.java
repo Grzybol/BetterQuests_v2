@@ -15,11 +15,26 @@ public class QuestDefinitionsLoader {
     private final List<QuestDefinition> all = new ArrayList<>();
     public QuestDefinitionsLoader(Plugin plugin) {
         File file = new File(plugin.getDataFolder(), "quests.yml");
+        // Sprawdź typ storage w configu
+        String storageType = "yaml";
+        if (plugin.getConfig().contains("storage.type")) {
+            storageType = plugin.getConfig().getString("storage.type", "yaml");
+        }
+        // Jeśli storage: yaml i plik nie istnieje, kopiuj domyślny plik z resources
+        if ("yaml".equalsIgnoreCase(storageType) && !file.exists()) {
+            try (java.io.InputStream in = plugin.getResource("quests.yml")) {
+                if (in != null) {
+                    java.nio.file.Files.copy(in, file.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                }
+            } catch (Exception e) {
+                plugin.getLogger().warning("Nie można skopiować domyślnego quests.yml: " + e.getMessage());
+            }
+        }
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         Set<String> ids = new HashSet<>();
-    @SuppressWarnings("unchecked")
-    List<Map<String, Object>> quests = (List<Map<String, Object>>) (List<?>) config.getMapList("quests");
-    for (Map<String, Object> map : quests) {
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> quests = (List<Map<String, Object>>) (List<?>) config.getMapList("quests");
+        for (Map<String, Object> map : quests) {
             String id = Objects.toString(map.get("id"), "");
             if (id.isEmpty() || ids.contains(id)) continue;
             ids.add(id);
@@ -32,7 +47,6 @@ public class QuestDefinitionsLoader {
             double baseReward = ((Number) map.getOrDefault("baseReward", 0)).doubleValue();
 
             double moneyTierMultiplier = ((Number) map.getOrDefault("moneyTierMultiplier", 1.0)).doubleValue();
-
 
             Object baseRequiredItemsObj = map.getOrDefault("baseRequiredItems", 1);
             int baseRequiredItems = (baseRequiredItemsObj instanceof Number) ? Math.max(1, ((Number) baseRequiredItemsObj).intValue()) : Math.max(1, Integer.parseInt(baseRequiredItemsObj.toString()));

@@ -17,3 +17,75 @@ quests:
     baseRequiredItems: 64
     additionalRequiredItemsPerTier: 32
     maxTier: 2
+  - id: iron_miner
+    displayName: "Wydobądź żelazo!"
+    material: IRON_ORE
+    weight: 7
+    baseReward: 120.0
+    moneyTierMultiplier: 1.4
+    baseRequiredItems: 24
+    additionalRequiredItemsPerTier: 12
+    maxTier: 2
+  - id: gold_miner
+    displayName: "Wydobądź złoto!"
+    material: GOLD_ORE
+    weight: 5
+    baseReward: 150.0
+    moneyTierMultiplier: 1.6
+    baseRequiredItems: 16
+    additionalRequiredItemsPerTier: 8
+    maxTier: 2
+  - id: diamond_hunter
+    displayName: "Znajdź diamenty!"
+    material: DIAMOND
+    weight: 3
+    baseReward: 300.0
+    moneyTierMultiplier: 2.0
+    baseRequiredItems: 4
+    additionalRequiredItemsPerTier: 2
+    maxTier: 2
+  - id: wheat_farmer
+    displayName: "Zbierz pszenicę!"
+    material: WHEAT
+    weight: 9
+    baseReward: 90.0
+    moneyTierMultiplier: 1.2
+    baseRequiredItems: 48
+    additionalRequiredItemsPerTier: 24
+    maxTier: 2
+  - id: bread_baker
+    displayName: "Upiecz chleb!"
+    material: BREAD
+    weight: 6
+    baseReward: 110.0
+    moneyTierMultiplier: 1.3
+    baseRequiredItems: 24
+    additionalRequiredItemsPerTier: 12
+    maxTier: 2
+  - id: mob_slayer
+    displayName: "Pokonaj potwory!"
+    material: ROTTEN_FLESH
+    weight: 8
+    baseReward: 130.0
+    moneyTierMultiplier: 1.5
+    baseRequiredItems: 30
+    additionalRequiredItemsPerTier: 15
+    maxTier: 2
+  - id: fisherman
+    displayName: "Złap ryby!"
+    material: COD
+    weight: 7
+    baseReward: 100.0
+    moneyTierMultiplier: 1.4
+    baseRequiredItems: 20
+    additionalRequiredItemsPerTier: 10
+    maxTier: 2
+  - id: builder
+    displayName: "Postaw bloki!"
+    material: COBBLESTONE
+    weight: 6
+    baseReward: 80.0
+    moneyTierMultiplier: 1.2
+    baseRequiredItems: 64
+    additionalRequiredItemsPerTier: 32
+    maxTier: 2

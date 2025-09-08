@@ -3,15 +3,15 @@ main: org.bestservers.DailyQuestsPlugin
 version: 1.0.0
 api-version: 1.18
 depend: [Vault]
-softdepend: [PlaceholderAPI]
+softdepend: [Essentials, EssentialsX, Economy, PlaceholderAPI]
 commands:
-  quests:
+  zadania:
     description: Zarządzanie questami dziennymi
-    usage: /quests [reload|info <id>]
+    usage: /zadania [reload|info <id>]
     permission: dailyquests.user
-  claim:
+  oddaj:
     description: Rozlicz aktywne questy
-    usage: /claim
+    usage: /oddaj
     permission: dailyquests.user
 permissions:
   dailyquests.user:
