@@ -62,6 +62,10 @@ public class QuestsCommand implements CommandExecutor {
             pluginLogger.log(PluginLogger.LogLevel.INFO, "QuestsCommand: Info displayed for quest id: " + id);
             return true;
         }
+        if(args[0].equalsIgnoreCase("info")) {
+            sender.sendMessage(ChatColor.RED + "Użycie: /zadania info <id_questu>");
+            return true;
+        }
         showActiveQuests(sender);
         return true;
     }
@@ -86,7 +90,7 @@ public class QuestsCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.YELLOW + "" + (i + 1) + ". "
                     + def.getDisplayName()
                     + ChatColor.GRAY + " [ID: " + def.getId() + "]"
-                    + ChatColor.DARK_GRAY + " [" + def.getMaterial() + "]");
+                    + ChatColor.DARK_GRAY + " [" + def.getMaterial() + "] x" + plugin.getProgressService().getRequiredForTier(def, 1));
 
         }
     }

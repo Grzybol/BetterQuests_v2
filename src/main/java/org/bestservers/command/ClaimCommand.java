@@ -83,9 +83,17 @@ public class ClaimCommand implements CommandExecutor {
 
         org.bestservers.model.PlayerQuestProgress progress = plugin.getProgressService().getProgress(player.getUniqueId(), def.getId());
         int tier = (progress != null) ? progress.getTier() : 1;
+        int maxTier = (def.getMaxTier() != null) ? def.getMaxTier() : Integer.MAX_VALUE;
+        if (tier >= maxTier) {
+            pluginLogger.log(PluginLogger.LogLevel.INFO, "ClaimCommand: Max tier reached for player " + player.getName() + ", quest: " + def.getId());
+            player.sendMessage(ChatColor.RED + "Quest " + def.getDisplayName() + ": osiągnięto maksymalny tier.");
+            return;
+        }
         int contributed = (progress != null) ? progress.getContributedCount() : 0;
         int required = plugin.getProgressService().getRequiredForTier(def, tier);
         int needed = required - contributed;
+
+        double moneyRewardForNextTier = tier * def.getBaseReward() * def.getMoneyTierMultiplier();
 
         pluginLogger.log(PluginLogger.LogLevel.DEBUG, "ClaimCommand: Quest " + def.getId() + " tier: " + tier + ", contributed: " + contributed + ", required: " + required + ", needed: " + needed);
 
@@ -122,13 +130,13 @@ public class ClaimCommand implements CommandExecutor {
         int newTier = (newProgress != null) ? newProgress.getTier() : 1;
         int newRequired = plugin.getProgressService().getRequiredForTier(def, newTier);
 
-// teraz już pokazujesz faktyczny stan
+        // teraz już pokazujesz faktyczny stan
         QuestProgressFormatter formatter = new QuestProgressFormatter();
         if (result.tierAfter > result.tierBefore) {
             // nowy tier – pokazujemy gratulacje
             int nextRequired = plugin.getProgressService().getRequiredForTier(def, result.tierAfter);
             formatter.sendLevelUpMessage(player, def, result.tierBefore, result.tierAfter,
-                    result.rewardPaid, nextRequired);
+                    result.rewardPaid, nextRequired, moneyRewardForNextTier);
         } else {
             // zwykły progres
             String progressMsg = formatter.formatProgressMessage(def, newContributed, newRequired);
@@ -137,7 +145,10 @@ public class ClaimCommand implements CommandExecutor {
 
         // Dodatkowa informacja (opcjonalnie)
         player.sendMessage(ChatColor.GRAY + "Tier " + result.tierBefore + " → " + result.tierAfter
-                + ", nagroda: " + result.rewardPaid);
+                + ", otrzymana nagroda: " + result.rewardPaid
+        + ChatColor.GRAY + " (potrzebne do kolejnego tieru: " + newRequired + ")"
+        + ChatColor.GRAY + ", usunięte przedmioty: " + removed
+                + ChatColor.GRAY + " (następna nagroda: "+moneyRewardForNextTier+")");
     }
 
 }
